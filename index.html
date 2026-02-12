@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Happy Valentine, Krishza ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI, sans-serif;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  overflow-x:hidden;
+}
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:16px;
+}
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  margin-bottom:18px;
+}
+h1{color:#ff4d6d;margin:6px 0}
+.btn{
+  padding:10px 18px;
+  border:none;
+  border-radius:25px;
+  background:#ff4d6d;
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+  margin:6px;
+}
+.hidden{display:none}/* hearts */ .heart{ position:fixed; bottom:-20px; color:#ff4d6d; animation:float 6s linear infinite; } @keyframes float{to{transform:translateY(-110vh)}}
+
+/* gallery */ .gallery{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; } .gallery img{ width:100%; border-radius:14px; height:130px; object-fit:cover; }
+
+/* tic tac toe */ .board{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:220px; margin:10px auto; } .cell{ background:#ffe4ea; height:60px; display:flex; align-items:center; justify-content:center; font-size:28px; border-radius:12px; cursor:pointer; }
+
+.footer{font-size:12px;color:#777} </style>
+
+</head>
+<body>
+<div class="container"><div class="card">
+<h1>Happy Valentine, Krishza ❤️</h1>
+<p>Hi Krishza, this small page is made only for you.</p>
+<p>I still remember our special day – <b>13 December 2023</b>.</p>
+<p>You truly mean a lot to me.</p>
+<div class="footer">– Ayush</div>
+</div><div class="card">
+<h2>Our Memories 📸</h2>
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" />
+<img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" />
+<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9" />
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" />
+</div>
+<p style="font-size:12px">(You can replace these photos with your own later)</p>
+</div><div class="card">
+<h2>Heart Tic‑Tac‑Toe 💗</h2>
+<p>You = ❤️ &nbsp; Me = 💌</p>
+<div class="board" id="board"></div>
+<p id="gameStatus"></p>
+</div><div class="card" id="valCard">
+<h2>Krishza… will you be my Valentine? 💖</h2>
+<div id="buttons">
+<button class="btn" onclick="yesClicked()">Yes 💕</button>
+<button class="btn" id="noBtn" onclick="noClicked()">No 🙈</button>
+</div>
+<p id="whyBox" class="hidden">
+Why? 🥺<br>
+<input id="whyInput" placeholder="Tell me why…" style="padding:8px;border-radius:10px;border:1px solid #ccc;margin-top:6px;width:80%"><br>
+<button class="btn" onclick="forceYes()">Submit</button>
+</p>
+<p id="finalMsg" class="hidden"></p>
+</div></div><script>
+/* floating hearts */
+setInterval(()=>{
+  const h=document.createElement('div');
+  h.className='heart';
+  h.innerText='❤';
+  h.style.left=Math.random()*100+'vw';
+  h.style.fontSize=(12+Math.random()*20)+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},400);
+
+/* Tic Tac Toe */
+const board=document.getElementById('board');
+const status=document.getElementById('gameStatus');
+let cells=Array(9).fill(null);
+let turn='❤️';
+
+function render(){
+  board.innerHTML='';
+  cells.forEach((v,i)=>{
+    const c=document.createElement('div');
+    c.className='cell';
+    c.textContent=v||'';
+    c.onclick=()=>play(i);
+    board.appendChild(c);
+  });
+}
+
+function play(i){
+  if(cells[i])return;
+  cells[i]=turn;
+  if(checkWin()){
+    status.textContent=turn+' wins!';
+    return;
+  }
+  turn = turn==='❤️'?'💌':'❤️';
+  render();
+}
+
+function checkWin(){
+  const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  return w.some(a=>a.every(i=>cells[i]===turn));
+}
+render();
+
+/* Valentine buttons */
+function noClicked(){
+  document.getElementById('whyBox').classList.remove('hidden');
+}
+
+function forceYes(){
+  document.getElementById('whyBox').classList.add('hidden');
+  yesClicked();
+}
+
+function yesClicked(){
+  document.getElementById('buttons').classList.add('hidden');
+  const msg=document.getElementById('finalMsg');
+  msg.classList.remove('hidden');
+  msg.innerHTML='Yay! 💖 Thank you for being my Valentine, Krishza!';
+}
+</script></body>
+</html>
